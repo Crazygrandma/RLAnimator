@@ -2,31 +2,33 @@
 #include "RLAnimator.h"
 
 
-BAKKESMOD_PLUGIN(RLAnimator, "write a plugin description here", plugin_version, PLUGINTYPE_FREEPLAY)
+BAKKESMOD_PLUGIN(RLAnimator, "Export animation", plugin_version, PLUGINTYPE_FREEPLAY)
 
 std::shared_ptr<CVarManagerWrapper> _globalCvarManager;
 
 void RLAnimator::onLoad()
 {
 	_globalCvarManager = cvarManager;
-	//LOG("Plugin loaded!");
+	LOG("Plugin loaded!");
+	cvarManager->registerCvar("animator_cam_distance", "200.0", "Distance to move the camera away");
+
+	cvarManager->registerCvar("animator_enabled", "0", "Enable the animator", true, true, 0, true, 1)
+		.addOnValueChanged([this](std::string cvarName, CVarWrapper newCvar) {
+		bool animatorEnabled = newCvar.getBoolValue();
+			});
+
+	cvarManager->registerNotifier("CameraDistance", [this](std::vector<std::string> params){setCamDistance();}, "", PERMISSION_ALL);
 	// !! Enable debug logging by setting DEBUG_LOG = true in logging.h !!
 	//DEBUGLOG("RLAnimator debug mode enabled");
 
 	// LOG and DEBUGLOG use fmt format strings https://fmt.dev/latest/index.html
 	//DEBUGLOG("1 = {}, 2 = {}, pi = {}, false != {}", "one", 2, 3.14, true);
 
-	//cvarManager->registerNotifier("my_aweseome_notifier", [&](std::vector<std::string> args) {
-	//	LOG("Hello notifier!");
-	//}, "", 0);
+	/*cvarManager->registerNotifier("my_aweseome_notifier", [&](std::vector<std::string> args) {
+		LOG("TEsting POOOOOOOOOOOOOOOOOOOOOOOOG");
+	}, "", 0);*/
 
-	//auto cvar = cvarManager->registerCvar("template_cvar", "hello-cvar", "just a example of a cvar");
 	//auto cvar2 = cvarManager->registerCvar("template_cvar2", "0", "just a example of a cvar with more settings", true, true, -10, true, 10 );
-
-	//cvar.addOnValueChanged([this](std::string cvarName, CVarWrapper newCvar) {
-	//	LOG("the cvar with name: {} changed", cvarName);
-	//	LOG("the new value is: {}", newCvar.getStringValue());
-	//});
 
 	//cvar2.addOnValueChanged(std::bind(&RLAnimator::YourPluginMethod, this, _1, _2));
 
@@ -34,7 +36,6 @@ void RLAnimator::onLoad()
 	//enabled = std::make_shared<bool>(false);
 	//cvarManager->registerCvar("TEMPLATE_Enabled", "0", "Enable the TEMPLATE plugin", true, true, 0, true, 1).bindTo(enabled);
 
-	//cvarManager->registerNotifier("NOTIFIER", [this](std::vector<std::string> params){FUNCTION();}, "DESCRIPTION", PERMISSION_ALL);
 	//cvarManager->registerCvar("CVAR", "DEFAULTVALUE", "DESCRIPTION", true, true, MINVAL, true, MAXVAL);//.bindTo(CVARVARIABLE);
 	//gameWrapper->HookEvent("FUNCTIONNAME", std::bind(&TEMPLATE::FUNCTION, this));
 	//gameWrapper->HookEventWithCallerPost<ActorWrapper>("FUNCTIONNAME", std::bind(&RLAnimator::FUNCTION, this, _1, _2, _3));
@@ -46,4 +47,12 @@ void RLAnimator::onLoad()
 	//});
 	// You could also use std::bind here
 	//gameWrapper->HookEvent("Function TAGame.Ball_TA.Explode", std::bind(&RLAnimator::YourPluginMethod, this);
+}
+
+
+
+void RLAnimator::setCamDistance() {
+	CVarWrapper animator_cam_distanceCVar = cvarManager->getCvar("animator_cam_distance");
+	if (!animator_cam_distanceCVar) { return; }
+	float distance = animator_cam_distanceCVar.getFloatValue();
 }

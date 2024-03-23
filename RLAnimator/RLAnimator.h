@@ -10,7 +10,7 @@ constexpr auto plugin_version = stringify(VERSION_MAJOR) "." stringify(VERSION_M
 
 
 class RLAnimator: public BakkesMod::Plugin::BakkesModPlugin
-	//,public SettingsWindowBase // Uncomment if you wanna render your own tab in the settings menu
+	,public SettingsWindowBase // Uncomment if you wanna render your own tab in the settings menu
 	//,public PluginWindowBase // Uncomment if you want to render your own plugin window
 {
 
@@ -18,9 +18,10 @@ class RLAnimator: public BakkesMod::Plugin::BakkesModPlugin
 
 	//Boilerplate
 	void onLoad() override;
+	void setCamDistance();
 	//void onUnload() override; // Uncomment and implement if you need a unload method
 
 public:
-	//void RenderSettings() override; // Uncomment if you wanna render your own tab in the settings menu
+	void RenderSettings() override; // Uncomment if you wanna render your own tab in the settings menu
 	//void RenderWindow() override; // Uncomment if you want to render your own plugin window
 };
