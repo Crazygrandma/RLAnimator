@@ -15,10 +15,11 @@ class RLAnimator: public BakkesMod::Plugin::BakkesModPlugin
 {
 
 	//std::shared_ptr<bool> enabled;
-
+	bool enabled = false;
 	//Boilerplate
 	void onLoad() override;
-	void setCamDistance();
+	void Initialize();
+	void applyInput();
 	//void onUnload() override; // Uncomment and implement if you need a unload method
 
 public:
