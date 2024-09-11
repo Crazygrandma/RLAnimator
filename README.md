@@ -1,13 +1,23 @@
 # RLAnimator
-A bakkesmod plugin for Rocket League that lets you record and export ingame animation
 
-## Planned features
+A bakkesmod plugin for Rocket League that lets you record the car and ball animation in realtime and use it in Blender for editing purposes.
 
-### Freeplay Mode
-- Record game state animation
-- Export animation
-- Apply car input to perform different moves
+## TODO
 
+- Establish socket connection to Blender Plugin
+- Set init params like body type and map
+- Record/Pause/Save Button
+- Record on Car Movement
+- Keybinds for Record and Save
+- Custom Keybinds
 
-### Spectator Mode
-Get stats for every player in the match (car body, points, decal)
+Blender Plugin
+
+- Import car types
+- Start websocket server
+- Establish connection
+- Animate car location
+- Animate car rotation
+- Animate ball location
+- Animate ball rotation
+- Animate car wheels
